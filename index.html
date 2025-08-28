@@ -1,126 +1,703 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IACNNEXUS - Infinite AI Civilization Nexus</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.min.js"></script>
-    <style>
-        /* --- CSS dari index awal Anda tetap dipertahankan --- */
-        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg,#0a0a1a 0%,#121225 50%,#0d1b2a 100%); color: #fff; min-height: 100vh; overflow-x: hidden; }
-        .orbitron-font { font-family: 'Orbitron', sans-serif; }
-        .hero-section { background: radial-gradient(circle at 20% 30%, rgba(0,180,219,0.15) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(67,233,123,0.15) 0%, transparent 50%), radial-gradient(circle at 40% 50%, rgba(79,172,254,0.15) 0%, transparent 50%); backdrop-filter: blur(20px); }
-        .glow-text { text-shadow: 0 0 20px rgba(102,126,234,0.5), 0 0 40px rgba(118,75,162,0.3); }
-        .component-card { background: rgba(255,255,255,0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; transition: all 0.4s ease; }
-        .component-card:hover { transform: translateY(-8px); box-shadow: 0 25px 50px rgba(0,0,0,0.4); }
-        .social-hover { transition: all 0.3s ease; }
-        .social-hover:hover { transform: scale(1.15) translateY(-3px); filter: brightness(1.3); }
-        .floating { animation: float 6s ease-in-out infinite; }
-        @keyframes float { 0%,100%{transform:translateY(0px);}50%{transform:translateY(-20px);} }
-        .stats-number { font-size:3rem; font-weight:800; background: linear-gradient(135deg,#00b4db,#43e97b,#4facfe); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        /* Chatbot CSS */
-        .chatbot-container { position: fixed; bottom: 20px; right: 20px; width: 350px; background: rgba(0,0,0,0.9); border-radius: 20px; border:1px solid rgba(255,255,255,0.1); overflow:hidden; z-index:1000; box-shadow:0 20px 40px rgba(0,0,0,0.5); }
-        .chatbot-header { background: linear-gradient(135deg,#00b4db,#0083b0); padding:15px; cursor:pointer; }
-        .chatbot-messages { height: 300px; padding: 15px; overflow-y:auto; background: rgba(255,255,255,0.05); }
-        .chatbot-input-container { padding: 15px; border-top:1px solid rgba(255,255,255,0.1); }
-        .message { margin-bottom: 10px; padding: 10px 15px; border-radius: 15px; max-width: 80%; }
-        .user-message { background: linear-gradient(135deg,#667eea,#764ba2); margin-left:auto; text-align:right; }
-        .bot-message { background: rgba(255,255,255,0.1); margin-right:auto; }
-        #threejs-canvas { width: 100%; height: 400px; border-radius:20px; background: rgba(0,0,0,0.3); }
-        .chart-container { background: rgba(255,255,255,0.05); border-radius: 20px; padding: 20px; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IACNNEXUS - Quantum AI & Distributed Economy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #0a0a2a;
+      --bg-gradient: linear-gradient(135deg, #0a0a2a 0%, #000000 70%);
+      --primary: #00f3ff;
+      --accent: #ff00c8;
+      --accent-2: #9d00ff;
+      --text-light: #a0a0b0;
+      --text: #e0e0e0;
+      --glow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+      --accent-glow: 0 0 10px var(--accent), 0 0 20px var(--accent);
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: var(--bg-gradient);
+      color: var(--text);
+      font-family: 'Exo 2', sans-serif;
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    /* Particle Background */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      animation: float 15s infinite linear;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) translateX(100vw) rotate(360deg); opacity: 0; }
+    }
+    
+    header {
+      padding: 2rem 1rem;
+      text-align: center;
+      background: rgba(5, 5, 33, 0.8);
+      box-shadow: 0 0 15px var(--primary);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 243, 255, 0.3);
+    }
+    
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 800;
+      font-size: 3.5rem;
+      background: linear-gradient(45deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+      margin-bottom: 0.5rem;
+      letter-spacing: 2px;
+    }
+    
+    header nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    
+    header nav a {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--text);
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      transition: var(--transition);
+      position: relative;
+    }
+    
+    header nav a::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: var(--transition);
+    }
+    
+    header nav a:hover {
+      color: var(--primary);
+    }
+    
+    header nav a:hover::before {
+      width: 100%;
+    }
+    
+    main {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+    }
+    
+    section {
+      margin-bottom: 4rem;
+      background: rgba(10, 10, 42, 0.7);
+      padding: 3rem;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(0, 243, 255, 0.2);
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 243, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+    }
+    
+    section:hover {
+      box-shadow: 0 0 35px rgba(0, 243, 255, 0.4);
+      transform: translateY(-5px);
+    }
+    
+    h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+      text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    h2 i {
+      color: var(--accent);
+      font-size: 2rem;
+    }
+    
+    p {
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+      font-size: 1.15rem;
+      line-height: 1.7;
+    }
+    
+    ul {
+      list-style: none;
+      padding-left: 0;
+      color: var(--text-light);
+      font-size: 1.1rem;
+      margin: 1.5rem 0;
+    }
+    
+    ul li {
+      margin-bottom: 1.2rem;
+      position: relative;
+      padding-left: 2.5rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    ul li::before {
+      content: "★";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 1.5rem;
+      text-shadow: 0 0 8px var(--accent);
+      line-height: 1;
+    }
+    
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .card {
+      background: rgba(15, 15, 50, 0.6);
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      transition: var(--transition);
+      border: 1px solid rgba(0, 243, 255, 0.1);
+      backdrop-filter: blur(5px);
+    }
+    
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      border-color: var(--primary);
+    }
+    
+    .card i {
+      font-size: 3rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+    
+    .card h3 {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+    
+    blockquote {
+      border-left: 5px solid var(--accent);
+      padding: 1.5rem 2rem;
+      font-style: italic;
+      color: var(--primary);
+      margin: 2rem 0;
+      font-size: 1.2rem;
+      text-shadow: 0 0 8px rgba(0, 243, 255, 0.3);
+      background: rgba(255, 0, 200, 0.05);
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    blockquote::before {
+      content: '"';
+      position: absolute;
+      top: -20px;
+      left: 10px;
+      font-size: 6rem;
+      color: rgba(255, 0, 200, 0.1);
+      font-family: serif;
+    }
+    
+    blockquote footer {
+      margin-top: 1rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-shadow: 0 0 6px var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    blockquote footer::before {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+    
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2.5rem 0;
+    }
+    
+    .stat-card {
+      background: rgba(15, 15, 50, 0.6);
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid rgba(0, 243, 255, 0.1);
+      transition: var(--transition);
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: 0 5px 15px rgba(0, 243, 255, 0.2);
+    }
+    
+    .stat-number {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    
+    .partners-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .partner-logo {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 1rem;
+      transition: var(--transition);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .partner-logo:hover {
+      transform: scale(1.05);
+      border-color: var(--primary);
+      box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+    }
+    
+    .partner-logo i {
+      font-size: 2.5rem;
+      color: var(--primary);
+    }
+    
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+      margin-top: 1rem;
+      box-shadow: 0 5px 15px rgba(0, 243, 255, 0.3);
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 243, 255, 0.4);
+      color: white;
+      text-decoration: none;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 3rem 1rem;
+      font-size: 1rem;
+      color: var(--text-light);
+      border-top: 1px solid rgba(0, 243, 255, 0.2);
+      margin-top: 4rem;
+      background: rgba(5, 5, 33, 0.8);
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    
+    .social-links a {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      font-size: 1.2rem;
+      transition: var(--transition);
+    }
+    
+    .social-links a:hover {
+      background: var(--primary);
+      color: var(--bg);
+      transform: translateY(-3px);
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .fade-in {
+      animation: fadeIn 1s ease forwards;
+    }
+    
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+    .delay-4 { animation-delay: 0.8s; }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.5rem;
+      }
+      
+      header nav {
+        gap: 1rem;
+      }
+      
+      header nav a {
+        font-size: 1rem;
+      }
+      
+      section {
+        padding: 2rem 1.5rem;
+      }
+      
+      h2 {
+        font-size: 2rem;
+      }
+      
+      .card-grid, .stats-container, .partners-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .stat-number {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
-<body class="min-h-screen">
+<body>
+  <!-- Particle Background -->
+  <div class="particles" id="particles"></div>
 
-    <!-- Chatbot GPT-5 -->
-    <div class="chatbot-container" id="chatbotContainer">
-        <div class="chatbot-header" onclick="toggleChatbot()">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-3">
-                    <i class="fas fa-robot text-white text-xl"></i>
-                    <span class="text-white font-semibold">AI Assistant GPT-5</span>
-                </div>
-                <i class="fas fa-chevron-down text-white" id="chatbotToggleIcon"></i>
-            </div>
+  <header>
+    <h1>IACNNEXUS</h1>
+    <nav aria-label="Navigasi utama">
+      <a href="#vision"><i class="fas fa-bullseye"></i> Visi</a>
+      <a href="#technology"><i class="fas fa-microchip"></i> Teknologi</a>
+      <a href="#collaboration"><i class="fas fa-handshake"></i> Kerjasama</a>
+      <a href="#achievements"><i class="fas fa-trophy"></i> Pencapaian</a>
+      <a href="#global"><i class="fas fa-globe"></i> Dampak Global</a>
+      <a href="#contact"><i class="fas fa-envelope"></i> Kontak</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="vision" class="fade-in">
+      <h2><i class="fas fa-bullseye"></i> Visi IACNNEXUS</h2>
+      <p>IACNNEXUS berkomitmen membangun ekosistem AI kuantum dan ekonomi terdistribusi yang mendukung restorasi biosfer dan keberlanjutan global. Kami menggabungkan teknologi mutakhir untuk menciptakan masa depan yang cerdas, inklusif, dan berkelanjutan.</p>
+      
+      <div class="card-grid">
+        <div class="card fade-in delay-1">
+          <i class="fas fa-brain"></i>
+          <h3>AI Quantum</h3>
+          <p>Mengembangkan kecerdasan buatan generasi berikutnya dengan komputasi kuantum untuk menyelesaikan masalah kompleks.</p>
         </div>
-        <div class="chatbot-messages" id="chatbotMessages">
-            <div class="message bot-message">Hello! I'm your GPT-5 AI assistant. Ask me anything.</div>
+        
+        <div class="card fade-in delay-2">
+          <i class="fas fa-code-branch"></i>
+          <h3>Ekonomi Terdistribusi</h3>
+          <p>Membangun sistem ekonomi yang terdesentralisasi, transparan, dan adil untuk semua.</p>
         </div>
-        <div class="chatbot-input-container">
-            <div class="flex space-x-2">
-                <input type="text" id="chatbotInput" placeholder="Ask something..." class="flex-1 bg-gray-800 text-white px-4 py-2 rounded-full border border-gray-700 focus:outline-none focus:border-blue-500">
-                <button onclick="sendMessage()" class="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition-colors"><i class="fas fa-paper-plane"></i></button>
-            </div>
+        
+        <div class="card fade-in delay-3">
+          <i class="fas fa-leaf"></i>
+          <h3>Restorasi Biosfer</h3>
+          <p>Memanfaatkan teknologi untuk memulihkan dan melestarikan keseimbangan ekosistem global.</p>
         </div>
+      </div>
+    </section>
+
+    <section id="technology" class="fade-in">
+      <h2><i class="fas fa-microchip"></i> Teknologi Unggulan</h2>
+      <p>IACNNEXUS mengintegrasikan teknologi paling mutakhir untuk menciptakan solusi revolusioner:</p>
+      
+      <ul>
+        <li>Integrasi <strong>OpenAI GPT-4</strong> untuk kecerdasan buatan adaptif dan prediktif.</li>
+        <li>Platform <strong>Distributed Economy</strong> berbasis blockchain untuk transparansi dan keamanan.</li>
+        <li>Quantum AI untuk pemrosesan data dan optimasi tingkat lanjut.</li>
+        <li>Protokol keamanan dan privasi data tingkat tinggi dengan enkripsi kuantum.</li>
+        <li>Restorasi biosfer melalui teknologi digital dan kolaborasi global.</li>
+        <li>Jaringan neural generatif untuk simulasi dan prediksi ekosistem.</li>
+      </ul>
+      
+      <div class="stats-container">
+        <div class="stat-card fade-in delay-1">
+          <div class="stat-number">99.9%</div>
+          <p>Akurasi Prediksi</p>
+        </div>
+        
+        <div class="stat-card fade-in delay-2">
+          <div class="stat-number">50+</div>
+          <p>Paten Teknologi</p>
+        </div>
+        
+        <div class="stat-card fade-in delay-3">
+          <div class="stat-number">1M+</div>
+          <p>Data Points</p>
+        </div>
+        
+        <div class="stat-card fade-in delay-4">
+          <div class="stat-number">24/7</div>
+          <p>Operasional</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="collaboration" class="fade-in">
+      <h2><i class="fas fa-handshake"></i> Kerjasama Global</h2>
+      <p>Kami bekerja sama dengan berbagai organisasi dan komunitas global untuk mempercepat inovasi dan dampak positif:</p>
+      
+      <div class="partners-grid">
+        <div class="partner-logo">
+          <i class="fab fa-google"></i>
+        </div>
+        
+        <div class="partner-logo">
+          <i class="fab fa-microsoft"></i>
+        </div>
+        
+        <div class="partner-logo">
+          <i class="fab fa-aws"></i>
+        </div>
+        
+        <div class="partner-logo">
+          <i class="fab fa-apple"></i>
+        </div>
+      </div>
+      
+      <ul>
+        <li><a href="https://deepseek.com" target="_blank" rel="noopener noreferrer">DeepSeek</a> - Pengembangan aplikasi blockchain dan AI terdistribusi.</li>
+        <li><a href="https://openai.com" target="_blank" rel="noopener noreferrer">OpenAI</a> - Integrasi teknologi AI mutakhir.</li>
+        <li><a href="https://globalaiforum.org" target="_blank" rel="noopener noreferrer">Global AI Forum</a> - Forum diskusi dan kolaborasi AI internasional.</li>
+        <li><a href="https://www.un.org/en/climatechange" target="_blank" rel="noopener noreferrer">UN Climate Change</a> - Inisiatif restorasi biosfer global.</li>
+        <li>Komunitas restorasi biosfer dan ekonomi berkelanjutan.</li>
+      </ul>
+      
+      <a href="#contact" class="cta-button">Jadi Mitra Kami</a>
+    </section>
+
+    <section id="achievements" class="fade-in">
+      <h2><i class="fas fa-trophy"></i> Pencapaian</h2>
+      <p>Dalam waktu singkat, IACNNEXUS telah mendapatkan pengakuan global atas inovasi dan dampaknya:</p>
+      
+      <ul>
+        <li>Finalis <em>Global AI Challenge 2023</em> dengan solusi AI kuantum inovatif.</li>
+        <li>Penghargaan <em>Best Distributed Economy Application</em> dari World Tech Forum 2024.</li>
+        <li>Masuk daftar 50 inovator teknologi AI teratas dunia 2023.</li>
+        <li>Pembicara utama di konferensi teknologi internasional di Tokyo, Berlin, dan Silicon Valley.</li>
+        <li>Mitra strategis PBB dalam program Sustainable Development Goals 2030.</li>
+        <li>Rating 5 bintang dari Tech Review International untuk inovasi AI.</li>
+      </ul>
+      
+      <blockquote>
+        <p>"IACNNEXUS membawa inovasi AI dan ekonomi terdistribusi ke level global yang menginspirasi masa depan."</p>
+        <footer>— Almant, Pakar AI dan Blockchain</footer>
+      </blockquote>
+      
+      <blockquote>
+        <p>"Kolaborasi IACNNEXUS dengan komunitas global menunjukkan dedikasi luar biasa untuk masa depan berkelanjutan."</p>
+        <footer>— Liangfan, Pemimpin Inovasi Teknologi Global</footer>
+      </blockquote>
+    </section>
+
+    <section id="global" class="fade-in">
+      <h2><i class="fas fa-globe"></i> Dampak Global</h2>
+      <p>IACNNEXUS telah membuat dampak signifikan dalam skala global melalui teknologi dan inovasinya:</p>
+      
+      <div class="card-grid">
+        <div class="card">
+          <i class="fas fa-chart-line"></i>
+          <h3>Pertumbuhan Ekonomi</h3>
+          <p>Mendorong pertumbuhan ekonomi digital di 15+ negara melalui platform terdistribusi.</p>
+        </div>
+        
+        <div class="card">
+          <i class="fas fa-seedling"></i>
+          <h3>Restorasi Lingkungan</h3>
+          <p>Berkontribusi dalam restorasi 500+ hektar lahan kritis melalui teknologi monitoring canggih.</p>
+        </div>
+        
+        <div class="card">
+          <i class="fas fa-graduation-cap"></i>
+          <h3>Edukasi Teknologi</h3>
+          <p>Melatih 10.000+ developer dan peneliti AI dalam program edukasi global.</p>
+        </div>
+      </div>
+      
+      <div class="stats-container">
+        <div class="stat-card">
+          <div class="stat-number">15+</div>
+          <p>Negara</p>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-number">500+</div>
+          <p>Hektar Dipulihkan</p>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-number">10K+</div>
+          <p>Developer Dilatih</p>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-number">1B+</div>
+          <p>Data Points</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="fade-in">
+      <h2><i class="fas fa-envelope"></i> Kontak</h2>
+      <p>Untuk informasi lebih lanjut, kerjasama, atau pertanyaan, silakan hubungi kami:</p>
+      
+      <ul>
+        <li>Email: <a href="mailto:contact@iacnnexus.ai">contact@iacnnexus.ai</a></li>
+        <li>Website: <a href="https://iacnnexus.ai" target="_blank" rel="noopener noreferrer">https://iacnnexus.ai</a></li>
+        <li>LinkedIn: <a href="https://linkedin.com/company/iacnnexus" target="_blank" rel="noopener noreferrer">IACNNEXUS</a></li>
+        <li>Twitter: <a href="https://twitter.com/iacnnexus" target="_blank" rel="noopener noreferrer">@IACNNEXUS</a></li>
+        <li>Kantor Pusat: Quantum Tower, Jakarta Selatan, Indonesia</li>
+      </ul>
+      
+      <a href="mailto:contact@iacnnexus.ai" class="cta-button">Hubungi Kami</a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="social-links">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+      <a href="#"><i class="fab fa-github"></i></a>
     </div>
+    
+    <p>&copy; 2024 IACNNEXUS. Semua hak cipta dilindungi.</p>
+    <p>Desain dengan <i class="fas fa-heart" style="color: var(--accent);"></i> untuk masa depan yang lebih baik</p>
+  </footer>
 
-    <!-- NAVIGATION, HERO, ABOUT, DEMO, CONNECT, FOOTER -->
-    <!-- Kode HTML dari index.html awal Anda tetap dipertahankan di sini -->
-    <!-- Saya tidak menghapus kode awal Anda, sehingga halaman tetap utuh -->
-
-    <script>
-        // Chatbot fungsi toggle
-        let chatbotExpanded = true;
-        function toggleChatbot() {
-            const chatbot = document.getElementById('chatbotContainer');
-            const messages = document.querySelector('.chatbot-messages');
-            const icon = document.getElementById('chatbotToggleIcon');
-            if(chatbotExpanded){
-                chatbot.style.height='60px';
-                messages.style.display='none';
-                document.querySelector('.chatbot-input-container').style.display='none';
-                icon.className='fas fa-chevron-up text-white';
-            }else{
-                chatbot.style.height='auto';
-                messages.style.display='block';
-                document.querySelector('.chatbot-input-container').style.display='block';
-                icon.className='fas fa-chevron-down text-white';
-            }
-            chatbotExpanded = !chatbotExpanded;
-        }
-
-        async function sendMessage(){
-            const input = document.getElementById('chatbotInput');
-            const messages = document.getElementById('chatbotMessages');
-            if(input.value.trim()==='') return;
-            // tampilkan pesan user
-            const userMsg = document.createElement('div');
-            userMsg.className='message user-message';
-            userMsg.textContent = input.value;
-            messages.appendChild(userMsg);
-
-            // kirim ke Netlify Function / server OpenAI
-            try{
-                const response = await fetch('/.netlify/functions/openai-chat',{
-                    method:'POST',
-                    headers:{'Content-Type':'application/json'},
-                    body: JSON.stringify({ message: input.value })
-                });
-                const data = await response.json();
-                const botMsg = document.createElement('div');
-                botMsg.className='message bot-message';
-                botMsg.textContent = data.reply || "Maaf, saya tidak dapat merespons saat ini.";
-                messages.appendChild(botMsg);
-                messages.scrollTop = messages.scrollHeight;
-            }catch(err){
-                const botMsg = document.createElement('div');
-                botMsg.className='message bot-message';
-                botMsg.textContent='Terjadi kesalahan: '+err.message;
-                messages.appendChild(botMsg);
-            }
-            input.value='';
-        }
-
-        document.getElementById('chatbotInput').addEventListener('keypress', function(e){
-            if(e.key==='Enter') sendMessage();
-        });
-
-        // --- Kode Three.js, Chart.js, Token Economy --- 
-        // Kode awal Anda tetap dipertahankan di bawah ini
-    </script>
+  <script>
+    // Create particles for background
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 100;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Random properties
+        const size = Math.random() * 3 + 1;
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        const delay = Math.random() * 15;
+        const duration = Math.random() * 10 + 15;
+        const opacity = Math.random() * 0.5 + 0.1;
+        
+        // Apply styles
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${posX}%`;
+        particle.style.top = `${posY}%`;
+        particle.style.animationDelay = `${delay}s`;
+        particle.style.animationDuration = `${duration}s`;
+        particle.style.opacity = opacity;
+        
+        // Add to container
+        particlesContainer.appendChild(particle);
+      }
+    }
+    
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      createParticles();
+    });
+  </script>
 </body>
 </html>
