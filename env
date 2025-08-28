@@ -1,3 +1,16 @@
-# RR.CORP NEXUS Environment
+# RR.CORP NEXUS Environment Example
 APP_NAME="RR.CORP NEXUS"
-APP_ENV="
+APP_ENV="production"
+APP_URL="https://yourdomain.netlify.app"
+
+# API Keys (optional)
+TIKTOK_API_KEY="your_tiktok_api_key_here"
+YOUTUBE_API_KEY="your_youtube_api_key_here"
+TWITTER_BEARER_TOKEN="your_twitter_token_here"
+GITHUB_TOKEN="your_github_token_here"
+
+# Blockchain Token Addresses (optional)
+AGROTOKEN_CONTRACT_ADDRESS="0xYourAgroTokenAddress"
+ENERGITOKEN_CONTRACT_ADDRESS="0xYourEnergiTokenAddress"
+AQUATOKEN_CONTRACT_ADDRESS="0xYourAquaTokenAddress"
+CARBONTOKEN_CONTRACT_ADDRESS="0xYourCarbonTokenAddress"
